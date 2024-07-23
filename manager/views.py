@@ -31,8 +31,19 @@ class RoleDetailDetail(generics.RetrieveUpdateDestroyAPIView):
 def manager_login(request):
     username=request.POST['username']
     password=request.POST['password']
-    managerData=Manager.objects.get(email=username,password=password)
+    try:
+        managerData=Manager.objects.get(email=username,password=password)
+    except Manager.DoesNotExist:
+        managerData=None
     if managerData:
-        return JsonResponse({'bool':True})
+        return JsonResponse({'bool':True, 'manager_id': managerData.id, 'company_name': managerData.companyName})
     else:
         return JsonResponse({'bool':False})
+    
+class CompanyRolesList(generics.ListAPIView):
+    serializer_class = RoleDetailSerializer
+
+    def get_queryset(self):
+        company_id=self.kwargs['manager_id']
+        company=Manager.objects.get(pk=company_id)
+        return RoleDetail.objects.filter(company=company)

@@ -18,6 +18,7 @@ class Manager(models.Model):
     briefInfo = models.TextField()
     contractStatus = models.CharField(blank=True, max_length=8, choices=status)
     reportStatus = models.CharField(blank=True, max_length=8, choices=status)
+    companyLogo = models.ImageField( null=True)
 
     def __str__(self):
         return self.companyName

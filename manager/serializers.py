@@ -14,15 +14,18 @@ class ManagerSerializer(serializers.ModelSerializer):
             "briefInfo",
             "contractStatus",
             "reportStatus",
+            "companyLogo"
         )
         model = Manager
 
 class RoleDetailSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
+            "id",
             "company",
             "role",
             "numberOfInterns",
             "deadline",
+            "moreInfo"
         )
         model = RoleDetail
