@@ -14,9 +14,11 @@ class ManagerSerializer(serializers.ModelSerializer):
             "briefInfo",
             "contractStatus",
             "reportStatus",
-            "companyLogo"
+            "companyLogo",
+            "company_vacancies"
         )
         model = Manager
+        depth = 1
 
 class RoleDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,3 +31,4 @@ class RoleDetailSerializer(serializers.ModelSerializer):
             "moreInfo"
         )
         model = RoleDetail
+        depth = 1

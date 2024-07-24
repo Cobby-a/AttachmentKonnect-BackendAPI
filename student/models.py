@@ -10,6 +10,7 @@ class Student(models.Model):
     other_names = models.CharField(max_length=150)
     email = models.CharField(max_length=150)
     phone_number = models.CharField(max_length=150)
+    profile_pic = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.student_id
@@ -21,10 +22,8 @@ class StudentRolesApplied(models.Model):
     }
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=150)
-    studentId = models.CharField(max_length=150)
-    company = models.ForeignKey(Manager, on_delete=models.CASCADE)
-    role = models.ForeignKey(RoleDetail, on_delete=models.CASCADE)
+    role = models.ForeignKey(RoleDetail, on_delete=models.CASCADE, related_name='student_roles_applied')
+    # company = models.ForeignKey(Manager, on_delete=models.CASCADE)
     status = models.CharField(blank=True, max_length=8, choices=statusType)
     approval = models.CharField(blank=True, max_length=8, choices=statusType)
     start_date = models.DateField()

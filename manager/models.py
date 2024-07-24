@@ -24,11 +24,11 @@ class Manager(models.Model):
         return self.companyName
 
 class RoleDetail(models.Model):
-    company = models.ForeignKey(Manager, on_delete=models.CASCADE)
+    company = models.ForeignKey(Manager, on_delete=models.CASCADE, related_name='company_vacancies')
     role = models.CharField(max_length=100, null=False)
     numberOfInterns = models.IntegerField(null=False)
-    deadline = models.DateField(null=True)
-    moreInfo = models.TextField(null=True)
+    deadline = models.DateField(null=True, blank=True)
+    moreInfo = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.company.companyName + " - " + self.role
