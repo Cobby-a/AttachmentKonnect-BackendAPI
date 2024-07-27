@@ -18,7 +18,7 @@ class ManagerSerializer(serializers.ModelSerializer):
             "company_vacancies"
         )
         model = Manager
-        depth = 1
+        # depth = 1
 
 class RoleDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,7 +28,20 @@ class RoleDetailSerializer(serializers.ModelSerializer):
             "role",
             "numberOfInterns",
             "deadline",
-            "moreInfo"
+            "moreInfo",            
+        )
+        model = RoleDetail
+
+class RoleDetailSerializer1(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "id",
+            "company",
+            "role",
+            "numberOfInterns",
+            "deadline",
+            "moreInfo",
+            'student_roles_applied',
         )
         model = RoleDetail
         depth = 1

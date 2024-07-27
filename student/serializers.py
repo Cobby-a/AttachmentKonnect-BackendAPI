@@ -17,6 +17,22 @@ class StudentSerializer(serializers.ModelSerializer):
 class StudentRolesAppliedSerilaizer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            
+            'id',
+            "student",
+            "role",
+            "applicationFile",
+            "approval",
         )
         model = StudentRolesApplied
+
+class StudentRolesAppliedSerilaizer1(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id',
+            "student",
+            "role",
+            "applicationFile",
+            "approval",
+        )
+        model = StudentRolesApplied
+        depth = 2
