@@ -3,8 +3,8 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics, permissions
-from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1
-from .models import Student, StudentRolesApplied
+from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1
+from .models import Student, StudentRolesApplied, StudentInternship
 # Create your views here.
 
 class StudentList(generics.ListCreateAPIView):
@@ -45,3 +45,23 @@ class StudentApplicationList(generics.ListAPIView):
         student_id=self.kwargs['student_id']
         student=Student.objects.get(pk=student_id)
         return StudentRolesApplied.objects.filter(student=student)
+    
+class StudentInternshipList1(generics.ListAPIView):
+    serializer_class = StudentInternshipSerilaizer1
+
+    def get_queryset(self):
+        student_id=self.kwargs['student_id']
+        student=Student.objects.get(pk=student_id)
+        return StudentInternship.objects.filter(student=student).order_by('-id')
+
+class StudentRolesAppliedList1(generics.ListAPIView):
+    queryset = StudentRolesApplied.objects.all()
+    serializer_class = StudentRolesAppliedSerilaizer1
+
+class StudentInternshipList(generics.ListCreateAPIView):
+    queryset = StudentInternship.objects.all()
+    serializer_class = StudentInternshipSerilaizer
+
+class StudentInternshipDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = StudentInternship.objects.all()
+    serializer_class = StudentInternshipSerilaizer

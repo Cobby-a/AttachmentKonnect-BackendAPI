@@ -39,6 +39,7 @@ class StudentRolesApplied(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     role = models.ForeignKey(RoleDetail, on_delete=models.CASCADE, related_name='student_roles_applied')
     applicationFile = models.FileField(null=True)
+    applicationDate = models.DateField(auto_now_add=True, null=True)
     approval = models.CharField(blank=True, max_length=8, choices=statusType)
     class Meta:
         verbose_name_plural = "Student Roles Applied"
@@ -46,22 +47,22 @@ class StudentRolesApplied(models.Model):
     def __str__(self):
         return self.student.student_id + " - " + self.role.company.companyName + " - " + self.role.role
     
-class StudentAcceptedRoles(models.Model):
+class StudentInternship(models.Model):
     statusType = {
-        "Not Started": "Not Started",
-        "Ongoing": "Ongoing",
-        "Finished": "Finished",
+        "Accepted": "Accepted",
+        "Rejected": "Rejected",
     }
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     role = models.ForeignKey(RoleDetail, on_delete=models.CASCADE, related_name='student_accepted_roles')
-    status = models.CharField(blank=True, max_length=12, choices=statusType)
+    approval = models.CharField(blank=True, max_length=12, choices=statusType)
     smallInfo = models.TextField(null=True, blank=True)
-    start_date = models.DateField()
-    end_data = models.DateField()
+    start_date = models.DateField(null=True, blank=True)
+    end_data = models.DateField(null=True, blank=True)
+    optionalFile = models.FileField(null=True)
 
     class Meta:
-        verbose_name_plural = "Student Roles Applied"
+        verbose_name_plural = "Student Internships"
 
     def __str__(self):
         return self.student.student_id + " - " + self.role.company.companyName + " - " + self.role.role

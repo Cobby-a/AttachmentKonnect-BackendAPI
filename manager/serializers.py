@@ -44,4 +44,4 @@ class RoleDetailSerializer1(serializers.ModelSerializer):
             'student_roles_applied',
         )
         model = RoleDetail
-        depth = 1
+        depth = 2
