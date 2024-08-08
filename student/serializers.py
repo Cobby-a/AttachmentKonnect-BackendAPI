@@ -15,6 +15,22 @@ class StudentSerializer(serializers.ModelSerializer):
             "programme",
         )
         model = Student
+    
+class StudentSerializer1(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "student_id",
+            "password",
+            "last_name",
+            "other_names",
+            "email",
+            "phone_number",
+            "profile_pic",
+            "level",
+            "programme",
+        )
+        model = Student
+        depth = 1
 
 class StudentRolesAppliedSerilaizer(serializers.ModelSerializer):
     class Meta:

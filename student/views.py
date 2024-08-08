@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics, permissions
-from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1
+from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1, StudentSerializer1
 from .models import Student, StudentRolesApplied, StudentInternship
 # Create your views here.
 
@@ -16,6 +16,10 @@ class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+class StudentList1(generics.ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer1
 
 @csrf_exempt
 def student_login(request):
