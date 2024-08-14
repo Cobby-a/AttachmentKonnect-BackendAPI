@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Student, StudentRolesApplied, StudentInternship
+from .models import Student, StudentRolesApplied, StudentAppliedInternship, StudentInternships, StudentNotification
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -69,7 +69,7 @@ class StudentInternshipSerilaizer(serializers.ModelSerializer):
             "end_data",
             "optionalFile",
         )
-        model = StudentInternship
+        model = StudentAppliedInternship
 
 class StudentInternshipSerilaizer1(serializers.ModelSerializer):
     class Meta:
@@ -83,5 +83,45 @@ class StudentInternshipSerilaizer1(serializers.ModelSerializer):
             "end_data",
             "optionalFile",
         )
-        model = StudentInternship
+        model = StudentAppliedInternship
         depth = 2
+    
+class StudentInternshipsSerilaizer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id',
+            "student",
+            "role",
+            "offer",
+        )
+        model = StudentInternships
+
+class StudentInternshipsSerilaizer1(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id',
+            "student",
+            "role",
+            "offer",
+        )
+        model = StudentInternships
+        depth = 2
+
+class StudentNotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "id",
+            "student",
+            "notText",
+        )
+        model = StudentNotification
+
+class StudentNotificationSerializer1(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "id",
+            "student",
+            "notText",
+        )
+        model = StudentNotification
+        depth = 1

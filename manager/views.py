@@ -3,8 +3,8 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics, permissions
-from .serializers import ManagerSerializer, RoleDetailSerializer, RoleDetailSerializer1
-from .models import Manager, RoleDetail
+from .serializers import ManagerSerializer, RoleDetailSerializer, RoleDetailSerializer1, ManagerNotificationSerializer, ManagerNotificationSerializer1
+from .models import Manager, RoleDetail, ManagerNotification
 # Create your views here.
 
 class ManagerList(generics.ListCreateAPIView):
@@ -61,3 +61,21 @@ class CompanyRolesList(generics.ListAPIView):
         company_id=self.kwargs['manager_id']
         company=Manager.objects.get(pk=company_id)
         return RoleDetail.objects.filter(company=company).order_by('-id')
+    
+class ManagerNotificationList(generics.ListCreateAPIView):
+    queryset = ManagerNotification.objects.all().order_by('-id')
+    serializer_class = ManagerNotificationSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+class ManagerNotificationDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ManagerNotification.objects.all().order_by('-id')
+    serializer_class = ManagerNotificationSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+class CompanyStudentRoleNotification(generics.ListAPIView):
+    serializer_class = ManagerNotificationSerializer1
+
+    def get_queryset(self):
+        company_id=self.kwargs['manager_id']
+        company=Manager.objects.get(pk=company_id)
+        return ManagerNotification.objects.filter(company=company).order_by('-id')

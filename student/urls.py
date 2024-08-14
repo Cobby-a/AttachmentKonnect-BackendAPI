@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import StudentList, StudentDetail, student_login, StudentRolesAppliedList, StudentRolesAppliedDetail, StudentApplicationList, StudentRolesAppliedList1, StudentInternshipList, StudentInternshipDetail, StudentInternshipList1, StudentList1
+from .views import StudentList, StudentDetail, student_login, StudentRolesAppliedList, StudentRolesAppliedDetail, StudentApplicationList, StudentRolesAppliedList1, StudentInternshipList, StudentInternshipDetail, StudentInternshipList1, StudentList1, fetch_applied_status, fetch_internship_status, StudentInternshipsList1, StudentInternshipsList, StudentInternshipsDetail
 
 
 urlpatterns = [
@@ -12,6 +12,11 @@ urlpatterns = [
     path('student-roles-applied/<str:pk>', StudentRolesAppliedDetail.as_view()),
     path('studentapplication-list/<str:student_id>/', StudentApplicationList.as_view()),
     path('studentinternship-list/<str:student_id>/', StudentInternshipList1.as_view()),
-    path('student-internships/', StudentInternshipList.as_view()),
-    path('student-internships/<str:pk>', StudentInternshipDetail.as_view()),
+    path('studentinternships-list/<str:student_id>/', StudentInternshipsList1.as_view()),
+    path('student-applied-internships/', StudentInternshipList.as_view()),
+    path('student-applied-internships/<str:pk>', StudentInternshipDetail.as_view()),
+    path('studentinternships/', StudentInternshipsList.as_view()),
+    path('studentinternships/<str:pk>', StudentInternshipsDetail.as_view()),
+    path('fetch-applied-status/<str:student_id>/<str:role_id>', fetch_applied_status),
+    path('fetch-internship-status/<str:student_id>/<str:role_id>', fetch_internship_status)
 ]

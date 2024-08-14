@@ -3,9 +3,10 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics, permissions
-from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1, StudentSerializer1
-from .models import Student, StudentRolesApplied, StudentInternship
+from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1, StudentSerializer1, StudentInternshipsSerilaizer, StudentInternshipsSerilaizer1
+from .models import Student, StudentRolesApplied, StudentAppliedInternship, StudentInternships
 # Create your views here.
+from manager.models import RoleDetail
 
 class StudentList(generics.ListCreateAPIView):
     queryset = Student.objects.all()
@@ -48,7 +49,7 @@ class StudentApplicationList(generics.ListAPIView):
     def get_queryset(self):
         student_id=self.kwargs['student_id']
         student=Student.objects.get(pk=student_id)
-        return StudentRolesApplied.objects.filter(student=student)
+        return StudentRolesApplied.objects.filter(student=student).order_by('-id')
     
 class StudentInternshipList1(generics.ListAPIView):
     serializer_class = StudentInternshipSerilaizer1
@@ -56,16 +57,52 @@ class StudentInternshipList1(generics.ListAPIView):
     def get_queryset(self):
         student_id=self.kwargs['student_id']
         student=Student.objects.get(pk=student_id)
-        return StudentInternship.objects.filter(student=student).order_by('-id')
+        return StudentAppliedInternship.objects.filter(student=student).order_by('-id')
+    
+class StudentInternshipsList1(generics.ListAPIView):
+    serializer_class = StudentInternshipsSerilaizer1
+
+    def get_queryset(self):
+        student_id=self.kwargs['student_id']
+        student=Student.objects.get(pk=student_id)
+        return StudentInternships.objects.filter(student=student).order_by('-id')
 
 class StudentRolesAppliedList1(generics.ListAPIView):
     queryset = StudentRolesApplied.objects.all()
     serializer_class = StudentRolesAppliedSerilaizer1
 
 class StudentInternshipList(generics.ListCreateAPIView):
-    queryset = StudentInternship.objects.all()
+    queryset = StudentAppliedInternship.objects.all()
     serializer_class = StudentInternshipSerilaizer
 
 class StudentInternshipDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = StudentInternship.objects.all()
+    queryset = StudentAppliedInternship.objects.all()
     serializer_class = StudentInternshipSerilaizer
+
+class StudentInternshipsList(generics.ListCreateAPIView):
+    queryset = StudentInternships.objects.all()
+    serializer_class = StudentInternshipsSerilaizer
+
+class StudentInternshipsDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = StudentInternships.objects.all()
+    serializer_class = StudentInternshipsSerilaizer
+
+def fetch_applied_status(request, student_id, role_id):
+    student = Student.objects.filter(student_id= student_id).first()
+    role = RoleDetail.objects.filter(id=role_id).first()
+    appliedStatus = StudentRolesApplied.objects.filter(student=student, role=role).count()
+    internshipStatus = StudentAppliedInternship.objects.filter(student=student, role=role).count()
+    internship = StudentInternships.objects.filter(student=student, role=role).count()
+    if appliedStatus or internshipStatus or internship:
+        return JsonResponse({'bool': True})
+    else:
+        return JsonResponse({'bool': False})
+    
+def fetch_internship_status(request, student_id, role_id):
+    student = Student.objects.filter(student_id= student_id).first()
+    role = RoleDetail.objects.filter(id=role_id).first()
+    appliedStatus = StudentAppliedInternship.objects.filter(student=student, role=role).count()
+    if appliedStatus:
+        return JsonResponse({'bool': True})
+    else:
+        return JsonResponse({'bool': False})

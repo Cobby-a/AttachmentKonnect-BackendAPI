@@ -1,5 +1,5 @@
 from django.db import models
-
+from student.models import StudentInternships
 # Create your models here.
 
 class Manager(models.Model):
@@ -32,3 +32,12 @@ class RoleDetail(models.Model):
 
     def __str__(self):
         return self.company.companyName + " - " + self.role
+    
+    def total_accepted_students(self):
+        total_accepted_students=StudentInternships.objects.filter(role=self, offer="Accepted").count()
+        return total_accepted_students
+    
+class ManagerNotification(models.Model):
+    company = models.ForeignKey(Manager, on_delete=models.CASCADE)
+    role = models.ForeignKey(RoleDetail, on_delete=models.CASCADE)
+    notText = models.TextField()
