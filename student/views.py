@@ -3,13 +3,20 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics, permissions
-from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1, StudentSerializer1, StudentInternshipsSerilaizer, StudentInternshipsSerilaizer1
-from .models import Student, StudentRolesApplied, StudentAppliedInternship, StudentInternships
+from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1, StudentSerializer1, StudentInternshipsSerilaizer, StudentInternshipsSerilaizer1, StudentNotificationSerializer, StudentNotificationSerializer1
+from .models import Student, StudentRolesApplied, StudentAppliedInternship, StudentInternships, StudentNotification
 # Create your views here.
 from manager.models import RoleDetail
+from rest_framework.pagination import PageNumberPagination
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 3
 
 class StudentList(generics.ListCreateAPIView):
-    queryset = Student.objects.all()
+    queryset = Student.objects.all().order_by('student_id')
     serializer_class = StudentSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
@@ -19,8 +26,9 @@ class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
 class StudentList1(generics.ListAPIView):
-    queryset = Student.objects.all()
+    queryset = Student.objects.all().order_by('student_id')
     serializer_class = StudentSerializer1
+    pagination_class = StandardResultsSetPagination
 
 @csrf_exempt
 def student_login(request):
@@ -68,8 +76,9 @@ class StudentInternshipsList1(generics.ListAPIView):
         return StudentInternships.objects.filter(student=student).order_by('-id')
 
 class StudentRolesAppliedList1(generics.ListAPIView):
-    queryset = StudentRolesApplied.objects.all()
+    queryset = StudentRolesApplied.objects.all().order_by('-id')
     serializer_class = StudentRolesAppliedSerilaizer1
+    pagination_class = StandardResultsSetPagination
 
 class StudentInternshipList(generics.ListCreateAPIView):
     queryset = StudentAppliedInternship.objects.all()
@@ -106,3 +115,21 @@ def fetch_internship_status(request, student_id, role_id):
         return JsonResponse({'bool': True})
     else:
         return JsonResponse({'bool': False})
+    
+class StudentNotificationList(generics.ListCreateAPIView):
+    queryset = StudentNotification.objects.all().order_by('-id')
+    serializer_class = StudentNotificationSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+class StudentNotificationDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = StudentNotification.objects.all().order_by('-id')
+    serializer_class = StudentNotificationSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+class StudentCompanyRoleNotification(generics.ListAPIView):
+    serializer_class = StudentNotificationSerializer1
+
+    def get_queryset(self):
+        student_id=self.kwargs['student_id']
+        student=Student.objects.get(pk=student_id)
+        return StudentNotification.objects.filter(student=student).order_by('-id')
