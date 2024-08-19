@@ -75,6 +75,7 @@ class StudentInternships(models.Model):
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     role = models.ForeignKey('manager.RoleDetail', on_delete=models.CASCADE, related_name='student_internships')
+    company = models.ForeignKey('manager.Manager', on_delete=models.CASCADE, null=True)
     offer = models.CharField(blank=True, max_length=12, choices=offerType)
 
     class Meta:

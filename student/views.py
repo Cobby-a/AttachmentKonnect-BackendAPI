@@ -3,10 +3,10 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics, permissions
-from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1, StudentSerializer1, StudentInternshipsSerilaizer, StudentInternshipsSerilaizer1, StudentNotificationSerializer, StudentNotificationSerializer1
+from .serializers import StudentSerializer, StudentRolesAppliedSerilaizer, StudentRolesAppliedSerilaizer1, StudentInternshipSerilaizer, StudentInternshipSerilaizer1, StudentSerializer1, StudentInternshipsSerilaizer, StudentInternshipsSerilaizer1, StudentNotificationSerializer, StudentNotificationSerializer1, ManagerStudentInternshipsSerilaizer
 from .models import Student, StudentRolesApplied, StudentAppliedInternship, StudentInternships, StudentNotification
 # Create your views here.
-from manager.models import RoleDetail
+from manager.models import RoleDetail, Manager
 from rest_framework.pagination import PageNumberPagination
 
 
@@ -75,6 +75,15 @@ class StudentInternshipsList1(generics.ListAPIView):
         student=Student.objects.get(pk=student_id)
         return StudentInternships.objects.filter(student=student).order_by('-id')
 
+class ManagerStudentInternshipsList(generics.ListAPIView):
+    serializer_class = ManagerStudentInternshipsSerilaizer
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        company=self.kwargs['company']
+        company=Manager.objects.get(id=company)
+        return StudentInternships.objects.filter(company=company).order_by('-id')
+    
 class StudentRolesAppliedList1(generics.ListAPIView):
     queryset = StudentRolesApplied.objects.all().order_by('-id')
     serializer_class = StudentRolesAppliedSerilaizer1

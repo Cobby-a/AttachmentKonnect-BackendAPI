@@ -92,6 +92,7 @@ class StudentInternshipsSerilaizer(serializers.ModelSerializer):
             'id',
             "student",
             "role",
+            "company",
             "offer",
         )
         model = StudentInternships
@@ -102,6 +103,19 @@ class StudentInternshipsSerilaizer1(serializers.ModelSerializer):
             'id',
             "student",
             "role",
+            "company",
+            "offer",
+        )
+        model = StudentInternships
+        depth = 2
+
+class ManagerStudentInternshipsSerilaizer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id',
+            "student",
+            "role",
+            "company",
             "offer",
         )
         model = StudentInternships
