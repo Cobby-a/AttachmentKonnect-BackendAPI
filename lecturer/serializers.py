@@ -1,12 +1,32 @@
 from rest_framework import serializers
-from .models import Lecture
+from .models import Supervisor, SupervisorNotification
 
-class LecturerSerializer(serializers.ModelSerializer):
+class SupervisorSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             "staff_id",
             "password",
             "last_name",
             "other_names",
+            "profile_pic",
         )
-        model = Lecture
+        model = Supervisor
+
+class SupervisorNotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "id",
+            "supervisor",
+            "notText",
+        )
+        model = SupervisorNotification
+
+class SupervisorNotificationSerializer1(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "id",
+            "supervisor",
+            "notText",
+        )
+        model = SupervisorNotification
+        depth = 1

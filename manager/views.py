@@ -58,7 +58,7 @@ def manager_login(request):
     except Manager.DoesNotExist:
         managerData=None
     if managerData:
-        return JsonResponse({'bool':True, 'manager_id': managerData.id, 'company_name': managerData.companyName})
+        return JsonResponse({'bool':True, 'manager_id': managerData.id, 'company_name': managerData.companyName, 'pp': managerData.password})
     else:
         return JsonResponse({'bool':False})
 

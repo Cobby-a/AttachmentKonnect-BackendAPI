@@ -15,6 +15,7 @@ class ManagerSerializer(serializers.ModelSerializer):
             "contractStatus",
             "reportStatus",
             "companyLogo",
+            "companyCertificate",
             "company_vacancies"
         )
         model = Manager
