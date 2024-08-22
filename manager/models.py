@@ -36,6 +36,30 @@ class Manager(models.Model):
         )
         return super(Manager,self).save(*args, **kwargs)
     
+class ManagerProfileChange(models.Model):
+
+    companyName = models.CharField(max_length=150)
+    email = models.CharField(max_length=100)
+    ceo = models.CharField(max_length=100,)
+    location = models.CharField(max_length=100)
+    durationOfExistence = models.CharField(max_length=100)
+    briefInfo = models.TextField()
+    companyLogo = models.ImageField( null=True)
+
+    def __str__(self):
+        return self.companyName
+
+    def save(self, *args, **kwargs):
+        send_mail(
+            f'Company {self.companyName} Change Info',
+            'Here is the message.',
+            'attachmentkonnect@gmail.com',
+            ['attachmentkonnect@gmail.com'],
+            fail_silently=False,
+            html_message=f'<p><strong>Company Name:</strong>{self.companyName}<p/><p><strong>Company Email:</strong>{self.email}<p/><p><strong>Company Location:</strong>{self.location}<p/><p><strong>Company Ceo:</strong>{self.ceo}<p/><p><strong>Company Duration of Existence:</strong>{self.durationOfExistence}<p/><p><strong>Brief Intel:</strong>{self.briefInfo}<p/><p><strong>Logo:</strong>{self.companyLogo}<p/>',
+        )
+        return super(ManagerProfileChange,self).save(*args, **kwargs)
+    
 class RoleDetail(models.Model):
     company = models.ForeignKey(Manager, on_delete=models.CASCADE, related_name='company_vacancies')
     role = models.CharField(max_length=100, null=False)

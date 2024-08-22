@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import StudentList, StudentDetail, student_login, StudentRolesAppliedList, StudentRolesAppliedDetail, StudentApplicationList, StudentRolesAppliedList1, StudentInternshipList, StudentInternshipDetail, StudentInternshipList1, StudentList1, fetch_applied_status, fetch_internship_status, StudentInternshipsList1, StudentInternshipsList, StudentInternshipsDetail, StudentNotificationList, StudentNotificationDetail, StudentCompanyRoleNotification, ManagerStudentInternshipsList
+from .views import StudentList, StudentDetail, student_login, StudentRolesAppliedList, StudentRolesAppliedDetail, StudentApplicationList, StudentRolesAppliedList1, StudentInternshipList, StudentInternshipDetail, StudentInternshipList1, StudentList1, fetch_applied_status, fetch_internship_status, StudentInternshipsList1, StudentInternshipsList, StudentInternshipsDetail, StudentNotificationList, StudentNotificationDetail, StudentCompanyRoleNotification, ManagerStudentInternshipsList, StudentAssessmentList, StudentAssessmentDetail, StudentAssessmentList1, ManagerStudentInternshipsList1
 
 
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
     path('studentinternship-list/<str:student_id>/', StudentInternshipList1.as_view()),
     path('studentinternships-list/<str:student_id>/', StudentInternshipsList1.as_view()),
     path('managerstudentinternships-list/<str:company>/', ManagerStudentInternshipsList.as_view()),
+    path('managerstudentinternships-list1/<str:company>/', ManagerStudentInternshipsList1.as_view()),
     path('student-applied-internships/', StudentInternshipList.as_view()),
     path('student-applied-internships/<str:pk>', StudentInternshipDetail.as_view()),
     path('studentinternships/', StudentInternshipsList.as_view()),
@@ -24,4 +25,8 @@ urlpatterns = [
     path('student-company-notification/', StudentNotificationList.as_view()),
     path('student-company-notification/<str:pk>/', StudentNotificationDetail.as_view()),
     path('student-company-notification-list/<str:student_id>/', StudentCompanyRoleNotification.as_view()),
+
+    path('student-assessment/', StudentAssessmentList.as_view()),
+    path('student-assessment-list/', StudentAssessmentList1.as_view()),
+    path('student-assessment/<str:pk>', StudentAssessmentDetail.as_view()),
 ]

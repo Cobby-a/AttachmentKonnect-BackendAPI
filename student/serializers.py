@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Student, StudentRolesApplied, StudentAppliedInternship, StudentInternships, StudentNotification
+from .models import Student, StudentRolesApplied, StudentAppliedInternship, StudentInternships, StudentNotification, StudentAssessment
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -138,4 +138,51 @@ class StudentNotificationSerializer1(serializers.ModelSerializer):
             "notText",
         )
         model = StudentNotification
+        depth = 1
+
+class StudentInternAssessmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "student",
+            "company",
+            "email",
+            "durationOfInternship",
+            "qualityOfWork",
+            "abilityToWork",
+            "initiativeAndCreativity",
+            "characterTraits",
+            "dependabilty",
+            "attendanceAndPunctuality",
+            "organizationalFit",
+            "responseToSupervision",
+            "suggestionsForImprovement",
+            "nameOfSupervisor",
+            "positionOfSupervisor",
+            "supervisorEmail",
+            "supervisorContact",
+        )
+        model = StudentAssessment
+
+class StudentInternAssessmentSerializer1(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "student",
+            "company",
+            "email",
+            "durationOfInternship",
+            "qualityOfWork",
+            "abilityToWork",
+            "initiativeAndCreativity",
+            "characterTraits",
+            "dependabilty",
+            "attendanceAndPunctuality",
+            "organizationalFit",
+            "responseToSupervision",
+            "suggestionsForImprovement",
+            "nameOfSupervisor",
+            "positionOfSupervisor",
+            "supervisorEmail",
+            "supervisorContact",
+        )
+        model = StudentAssessment
         depth = 1

@@ -87,3 +87,23 @@ class StudentInternships(models.Model):
 class StudentNotification(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     notText = models.TextField()
+
+class StudentAssessment(models.Model):
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True)
+    # role = models.ForeignKey('manager.RoleDetail', on_delete=models.CASCADE)
+    company = models.ForeignKey('manager.Manager', on_delete=models.CASCADE)
+    email = models.CharField(max_length=150)
+    durationOfInternship = models.CharField(max_length=150, null=True, blank=True)
+    qualityOfWork = models.CharField(max_length=150)
+    abilityToWork = models.CharField(max_length=150)
+    initiativeAndCreativity = models.CharField(max_length=150)
+    characterTraits = models.CharField(max_length=150)
+    dependabilty = models.CharField(max_length=150)
+    attendanceAndPunctuality = models.CharField(max_length=150)
+    organizationalFit = models.CharField(max_length=150)
+    responseToSupervision = models.CharField(max_length=150)
+    suggestionsForImprovement = models.TextField(null=True, blank=True)
+    nameOfSupervisor = models.CharField(max_length=150)
+    positionOfSupervisor = models.CharField(max_length=150, null=True, blank=True)
+    supervisorEmail = models.CharField(max_length=150, null=True, blank=True)
+    supervisorContact = models.CharField(max_length=150, null=True, blank=True)

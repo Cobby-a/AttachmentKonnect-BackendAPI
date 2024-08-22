@@ -40,10 +40,10 @@ class SupervisorNotificationDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SupervisorNotificationSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
-class SupervisorCompanyRoleNotification(generics.ListAPIView):
-    serializer_class = SupervisorNotificationSerializer1
+# class SupervisorCompanyRoleNotification(generics.ListAPIView):
+#     serializer_class = SupervisorNotificationSerializer1
 
-    def get_queryset(self):
-        staff_id=self.kwargs['staff_id']
-        supervisor=Supervisor.objects.get(pk=staff_id)
-        return SupervisorNotification.objects.filter(supervisor=supervisor).order_by('-id')
+#     def get_queryset(self):
+#         staff_id=self.kwargs['staff_id']
+#         supervisor=Supervisor.objects.get(pk=staff_id)
+#         return SupervisorNotification.objects.filter(supervisor=supervisor).order_by('-id')

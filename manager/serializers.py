@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Manager, RoleDetail, ManagerNotification
+from .models import Manager, RoleDetail, ManagerNotification, ManagerProfileChange
 
 class ManagerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -69,3 +69,17 @@ class ManagerNotificationSerializer1(serializers.ModelSerializer):
         )
         model = ManagerNotification
         depth = 1
+
+class ManagerChangeProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "id",
+            "companyName",
+            "email",
+            "ceo",
+            "location",
+            "durationOfExistence",
+            "briefInfo",
+            "companyLogo",
+        )
+        model = ManagerProfileChange

@@ -14,5 +14,5 @@ class Supervisor(models.Model):
         return self.staff_id
     
 class SupervisorNotification(models.Model):
-    supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+    # supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
     notText = models.TextField()

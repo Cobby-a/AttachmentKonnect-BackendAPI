@@ -3,8 +3,8 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics, permissions
-from .serializers import ManagerSerializer, RoleDetailSerializer, RoleDetailSerializer1, ManagerNotificationSerializer, ManagerNotificationSerializer1
-from .models import Manager, RoleDetail, ManagerNotification
+from .serializers import ManagerSerializer, RoleDetailSerializer, RoleDetailSerializer1, ManagerNotificationSerializer, ManagerNotificationSerializer1, ManagerChangeProfileSerializer
+from .models import Manager, RoleDetail, ManagerNotification, ManagerProfileChange
 # Create your views here.
 
 from rest_framework.pagination import PageNumberPagination
@@ -18,6 +18,11 @@ class ManagerList(generics.ListCreateAPIView):
     queryset = Manager.objects.all().order_by('-id')
     serializer_class = ManagerSerializer
     pagination_class = StandardResultsSetPagination
+    # permission_classes = [permissions.IsAuthenticated]
+
+class ManagerList1(generics.ListCreateAPIView):
+    queryset = ManagerProfileChange.objects.all().order_by('-id')
+    serializer_class = ManagerChangeProfileSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
 class ManagerDetail(generics.RetrieveUpdateDestroyAPIView):

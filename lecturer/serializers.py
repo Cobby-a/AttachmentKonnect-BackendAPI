@@ -16,7 +16,7 @@ class SupervisorNotificationSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             "id",
-            "supervisor",
+            # "supervisor",
             "notText",
         )
         model = SupervisorNotification
@@ -25,7 +25,7 @@ class SupervisorNotificationSerializer1(serializers.ModelSerializer):
     class Meta:
         fields = (
             "id",
-            "supervisor",
+            # "supervisor",
             "notText",
         )
         model = SupervisorNotification
