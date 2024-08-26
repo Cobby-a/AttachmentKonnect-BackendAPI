@@ -38,6 +38,7 @@ class StudentRolesApplied(models.Model):
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     role = models.ForeignKey('manager.RoleDetail', on_delete=models.CASCADE, related_name='student_roles_applied')
+    company = models.ForeignKey('manager.Manager', on_delete=models.CASCADE, null=True)
     applicationFile = models.FileField(null=True)
     applicationDate = models.DateField(auto_now_add=True, null=True)
     approval = models.CharField(blank=True, max_length=8, choices=statusType)
@@ -90,8 +91,11 @@ class StudentNotification(models.Model):
 
 class StudentAssessment(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True)
+    student_last_name = models.CharField(max_length=150, null=True)
+    student_other_names = models.CharField(max_length=150, null=True)
     # role = models.ForeignKey('manager.RoleDetail', on_delete=models.CASCADE)
     company = models.ForeignKey('manager.Manager', on_delete=models.CASCADE)
+    company_name = models.CharField(max_length=150, null=True)
     email = models.CharField(max_length=150)
     durationOfInternship = models.CharField(max_length=150, null=True, blank=True)
     qualityOfWork = models.CharField(max_length=150)

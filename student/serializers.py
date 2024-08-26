@@ -38,6 +38,7 @@ class StudentRolesAppliedSerilaizer(serializers.ModelSerializer):
             'id',
             "student",
             "role",
+            "company",
             "applicationFile",
             "applicationDate",
             "approval",
@@ -50,6 +51,7 @@ class StudentRolesAppliedSerilaizer1(serializers.ModelSerializer):
             'id',
             "student",
             "role",
+            "company",
             "applicationFile",
             "applicationDate",
             "approval",
@@ -141,10 +143,16 @@ class StudentNotificationSerializer1(serializers.ModelSerializer):
         depth = 1
 
 class StudentInternAssessmentSerializer(serializers.ModelSerializer):
+    student_last_name = serializers.CharField(source='student.last_name', read_only=True)
+    student_other_names = serializers.CharField(source='student.other_names', read_only=True)
+    company_name = serializers.CharField(source='company.companyName', read_only=True)
     class Meta:
         fields = (
             "student",
+            "student_last_name",
+            "student_other_names",
             "company",
+            "company_name",
             "email",
             "durationOfInternship",
             "qualityOfWork",
@@ -164,6 +172,7 @@ class StudentInternAssessmentSerializer(serializers.ModelSerializer):
         model = StudentAssessment
 
 class StudentInternAssessmentSerializer1(serializers.ModelSerializer):
+    student = StudentSerializer()
     class Meta:
         fields = (
             "student",

@@ -112,6 +112,15 @@ class StudentRolesAppliedList1(generics.ListAPIView):
     serializer_class = StudentRolesAppliedSerilaizer1
     pagination_class = StandardResultsSetPagination
 
+class ManagerStudentApplicationsList1(generics.ListAPIView):
+    serializer_class = StudentRolesAppliedSerilaizer1
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        company=self.kwargs['company']
+        company=Manager.objects.get(id=company)
+        return StudentRolesApplied.objects.filter(company=company).order_by('-id')
+
 class StudentInternshipList(generics.ListCreateAPIView):
     queryset = StudentAppliedInternship.objects.all()
     serializer_class = StudentInternshipSerilaizer
