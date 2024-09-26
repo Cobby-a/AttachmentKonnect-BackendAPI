@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import ManagerList, ManagerDetail, RoleDetailList, RoleDetailDetail, manager_login, CompanyRolesList, CompanyRolesList1, RoleDetailOnlyList, RoleDetailOnlyDetail, ManagerNotificationList, ManagerNotificationDetail, CompanyStudentRoleNotification, ManagerList1
+from .views import ManagerList, ManagerDetail, RoleDetailList, RoleDetailDetail, manager_login, CompanyRolesList, CompanyRolesList1, RoleDetailOnlyList, RoleDetailOnlyDetail, ManagerNotificationList, ManagerNotificationDetail, CompanyStudentRoleNotification, ManagerList1, CompanyregisterdList, ManagerListRegistered
 
 urlpatterns = [
     path('', ManagerList.as_view()),
+    path('manager-company/', ManagerListRegistered.as_view()),
+    path('registered-companies/', CompanyregisterdList.as_view()),
     path('manager-change-profile/', ManagerList1.as_view()),
     path('<str:pk>', ManagerDetail.as_view()),
     path('manager-login/', manager_login),
